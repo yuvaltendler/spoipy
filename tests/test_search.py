@@ -10,7 +10,7 @@ class TestSearch(TestCase):
         LoadMusic.load_music("C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks")
         res = Search.get_artists()
         assert all(isinstance(x, Artist) for x in res)
-        # assert len(Search.get_artists(do_limit = True)) == Search.MUX_RESULTS
+        #assert len(Search.get_artists(do_limit = True)) == Search.MUX_RESULTS
 
     def test_get_albums(self):
         LoadMusic.load_music("C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks")
@@ -26,3 +26,8 @@ class TestSearch(TestCase):
         LoadMusic.load_music("C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks")
         res = Search.get_beast_songs('2l6M7GaS9x3rZOX6nDX3CM')
         assert res == [Song('נערי שובה אלי', 39), Song('אז מה', 34)]
+
+    def test_limit(self):
+        LoadMusic.load_music("C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks")
+        res = Search.limit(Search.get_artists())
+        assert len(res) == Search.MUX_RESULTS
