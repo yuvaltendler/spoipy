@@ -1,21 +1,24 @@
 import json
 from os import listdir
-
+import logging
 from music import ArtistManager, Song, Artist, Album
 
 
 class LoadMusic:
     @staticmethod
     def load_music(folder_path: str):
+        logging.debug('start load music')
         files_names = listdir(folder_path)
         get_file_path = lambda path, file_name: path + '\\' + file_name
         load_file = lambda file_name: LoadMusic._load_track(get_file_path(folder_path, file_name))
         # map(load_file, files_names)
         for file_name in files_names:
             load_file(file_name)
+        logging.debug('finish load music')
 
     @staticmethod
     def _load_track(file_path: str):
+        logging.debug('load %s', file_path)
         with open(file_path, 'r') as file:
             track = json.load(file)['track']
         song = Song(track['name'], track['popularity'])

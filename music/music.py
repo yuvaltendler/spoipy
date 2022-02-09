@@ -10,13 +10,13 @@ class Song:
 class Album:
     def __init__(self, name: str, songs: {str: Song} = {}):
         self.name = name
-        self.songs = songs
+        self.songs = {} #songs
 
 
 class Artist:
     def __init__(self, name: str, albums: {str, Album} = {}):
         self.name = name
-        self.albums = albums
+        self.albums = {} #albums
 
 
 class ArtistManager(metaclass=Singleton):
