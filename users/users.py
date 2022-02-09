@@ -11,6 +11,11 @@ class PremiumUser(FreeUser):
         super().__init__(playlists)
 
 
+class ArtistUser(PremiumUser):
+    def __init__(self, playlists={}):
+        super().__init__(playlists)
+
+
 class UserManager(metaclass=Singleton):
     def __init__(self):
         self.users = {}
