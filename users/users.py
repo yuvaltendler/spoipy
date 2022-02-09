@@ -2,6 +2,7 @@ import logging
 
 from exeptions.exeptions import passedPlaylistsAssignment, passSongsInPlaylistAssignment, playlistAlradyExist
 from music import Artist
+from properties import Properties
 from singleton import Singleton
 
 
@@ -11,18 +12,16 @@ from singleton import Singleton
 #         pass
 
 class FreeUser():
-    MAX_PLAYLISTS = 5
-    MAX_SONGS_IN_PLAYLIST = 20
 
     def __init__(self):
         self.playlists = {}
 
     def add_playlist(self, name: str, playlist):
-        if len(self.playlists) >= FreeUser.MAX_PLAYLISTS:
-            logging.warning('User try to add more then %d playlist', FreeUser.MAX_PLAYLISTS)
+        if len(self.playlists) >=  Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'):
+            logging.warning('User try to add more then %d playlist', Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'))
             raise passedPlaylistsAssignment()
-        elif len(playlist) > FreeUser.MAX_SONGS_IN_PLAYLIST:
-            logging.warning('User try to add playlist that bigger then %d', FreeUser.MAX_SONGS_IN_PLAYLIST)
+        elif len(playlist) > Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'):
+            logging.warning('User try to add playlist that bigger then %d', Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
             raise passSongsInPlaylistAssignment()
         elif name in self.playlists:
             logging.warning('User try to add 2 playlists with the same name')

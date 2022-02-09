@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from load import LoadMusic
 from music import Artist, Album, Song
+from properties import Properties
 from search.search import Search
 
 
@@ -30,4 +31,4 @@ class TestSearch(TestCase):
     def test_limit(self):
         LoadMusic.load_music("C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks")
         res = Search.limit(Search.get_artists())
-        assert len(res) == Search.MUX_RESULTS
+        assert len(res) == Properties().properties.get('FREE_USER_LIMIT_SEARCH_RESULT')

@@ -9,10 +9,10 @@ from music import Artist, ArtistManager, Album, Song
 #             return res
 #         return wrapper
 #     return get_do_limit
+from properties import Properties
+
 
 class Search:
-    MUX_RESULTS = 5
-
     # @limit_search
     @staticmethod
     def get_artists() -> [Artist]:
@@ -38,5 +38,5 @@ class Search:
 
     @staticmethod
     def limit(array):
-        return array[:Search.MUX_RESULTS]
+        return array[:Properties().properties.get('FREE_USER_LIMIT_SEARCH_RESULT')]
 
