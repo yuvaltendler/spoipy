@@ -1,3 +1,6 @@
+from singleton import Singleton
+
+
 class Song:
     def __init__(self, name: str, popularity: int):
         self.name = name
@@ -16,6 +19,6 @@ class Artist:
         self.album = album
 
 
-class ArtistManager:
+class ArtistManager(metaclass=Singleton):
     def __init__(self, artists: {str: Artist} = {}):
         self.artists = artists
