@@ -1,1 +1,1 @@
-from music.music import ArtistManager, Artist, Album
+from music.music import ArtistManager, Artist, Album, Song

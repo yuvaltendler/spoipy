@@ -1,7 +1,13 @@
-class Album:
-    def __init__(self, name: str, songs={}):
+class Song:
+    def __init__(self, name: str, popularity: int):
         self.name = name
-        self.songs = {}
+        self.popularity = popularity
+
+
+class Album:
+    def __init__(self, name: str, songs: {str: Song} = {}):
+        self.name = name
+        self.songs = songs
 
 
 class Artist:
