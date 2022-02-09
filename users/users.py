@@ -4,6 +4,11 @@ from music import Artist
 from singleton import Singleton
 
 
+# class UserBuilder:
+#     @staticmethod
+#     def sign_up():
+#         pass
+
 class FreeUser():
     MAX_PLAYLISTS = 5
 
@@ -41,5 +46,5 @@ class ArtistUser(PremiumUser):
 
 
 class UserManager(metaclass=Singleton):
-    def __init__(self):
-        self.users = {}
+    def __init__(self, users: {str: FreeUser} = {}):
+        self.users = users
