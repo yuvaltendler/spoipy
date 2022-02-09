@@ -14,9 +14,9 @@ class Album:
 
 
 class Artist:
-    def __init__(self, name: str, album: {str, Album} = {}):
+    def __init__(self, name: str, albums: {str, Album} = {}):
         self.name = name
-        self.album = album
+        self.albums = albums
 
 
 class ArtistManager(metaclass=Singleton):
