@@ -1,4 +1,5 @@
 import json
+from os import listdir
 
 from music import ArtistManager, Song, Artist, Album
 
@@ -6,7 +7,12 @@ from music import ArtistManager, Song, Artist, Album
 class LoadMusic:
     @staticmethod
     def load_music(folder_path: str):
-        pass
+        files_names = listdir(folder_path)
+        get_file_path = lambda path, file_name: path + '\\' + file_name
+        load_file = lambda file_name: LoadMusic._load_track(get_file_path(folder_path, file_name))
+        # map(load_file, files_names)
+        for file_name in files_names:
+            load_file(file_name)
 
     @staticmethod
     def _load_track(file_path: str):
