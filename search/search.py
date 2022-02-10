@@ -35,7 +35,9 @@ class Search:
         raise SongIdDoesNotExist()
 
     @staticmethod
-    def get_beast_songs(artist_id: str, num_of_results: int = 10) -> [Song]:
+    def get_beast_songs(artist_id: str, num_of_results: int = None) -> [Song]:
+        if num_of_results is None:
+            num_of_results = Properties().properties.get('DEFAULT_GET_BEAST_SONGS_LIMIT')
         songs = []
         for album in Search.get_albums(artist_id):
             songs = songs + list(album.songs.values())
