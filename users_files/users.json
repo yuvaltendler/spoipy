@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "is_free_user": 1,
+      "id": "freeUser1",
+      "playlists": {
+        "p1": [
+          "3o863oLzV4qj53EBCtEAqz",
+          "03DcpryHcONqKi2uKXK5Ow"
+        ],
+        "p2": [
+          "1yjY7rpaAQvKwpdUliHx0d"
+        ]
+      }
+    },
+    {
+      "is_free_user": 0,
+      "id": "premiumUser1",
+      "playlists": {
+        "p1": [
+          "3o863oLzV4qj53EBCtEAqz",
+          "03DcpryHcONqKi2uKXK5Ow"
+        ],
+        "p2": [
+          "1yjY7rpaAQvKwpdUliHx0d"
+        ]
+      }
+    },
+    {
+      "is_free_user": 0,
+      "id": "74XFHRwlV6OrjEM0A2NCMF",
+      "playlists": {
+        "p1": [
+          "3o863oLzV4qj53EBCtEAqz",
+          "03DcpryHcONqKi2uKXK5Ow"
+        ],
+        "p2": [
+          "1yjY7rpaAQvKwpdUliHx0d"
+        ]
+      }
+    }
+  ]
+}
