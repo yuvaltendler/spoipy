@@ -2,6 +2,7 @@ import logging
 import os
 
 from load import LoadMusic
+import menu
 from properties import Properties
 
 
@@ -12,6 +13,7 @@ def main():
     logging.debug('start main')
     properties = Properties()
     LoadMusic.load_music('C:\\Users\\user\\Documents\\Army\\codes\\spotipy\\tracks')
+    menu.show()
     logging.debug('stop main')
 
 if __name__ == '__main__':
