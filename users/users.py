@@ -29,6 +29,15 @@ class FreeUser():
         else:
             self.playlists[name] = playlist
 
+    def add_songs_to_playlist(self, playlist_name: str, songs: [Song]):
+        if playlist_name not in self.playlists:
+            self.add_playlist(playlist_name, songs)
+            return
+        playlist = self.playlists[playlist_name]
+        if len(playlist) + len(songs) > Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'):
+            logging.warning('User try to add playlist that bigger then %d', Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
+            raise PassSongsInPlaylistAssignment()
+        self.playlists[playlist_name] = playlist + songs
 
 class PremiumUser(FreeUser):
     def __init__(self):
@@ -40,6 +49,12 @@ class PremiumUser(FreeUser):
             raise PlaylistAlreadyExist()
         else:
             self.playlists[name] = playlist
+
+    def add_songs_to_playlist(self, playlist_name: str, songs: [Song]):
+        if playlist_name not in self.playlists:
+            self.add_playlist(playlist_name, songs)
+            return
+        self.playlists[playlist_name] = self.playlists[playlist_name] + songs
 
 
 class ArtistUser(PremiumUser):

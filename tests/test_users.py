@@ -13,3 +13,9 @@ class TestFreeUser(TestCase):
         user.add_playlist('p5', 'playlist')
         assert user.playlists == {'p1': 'playlist', 'p2': 'playlist', 'p3': 'playlist', 'p4': 'playlist', 'p5': 'playlist'}
         self.assertRaises(PassedPlaylistsAssignment, user.add_playlist, 'p6', 'playlist')
+
+    def test_add_songs_to_playlist(self):
+        user = FreeUser()
+        user.add_playlist('p1', [])
+        self.assertRaises(PassSongsInPlaylistAssignment, user.add_playlist, 'p1', 'playlistplaylistplaylist')
+

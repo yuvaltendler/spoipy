@@ -18,6 +18,13 @@ class Search:
                 return list(artist.albums[album_id].songs.values())
 
     @staticmethod
+    def get_song(song_id: str) -> Song:
+        for artist in ArtistManager().artists.values():
+            for album in artist.albums.values():
+                if song_id in album.songs:
+                    return album.songs[song_id]
+
+    @staticmethod
     def get_beast_songs(artist_id: str, num_of_results: int = 10) -> [Song]:
         songs = []
         for album in Search.get_albums(artist_id):
