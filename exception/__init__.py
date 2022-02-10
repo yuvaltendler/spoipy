@@ -1,1 +1,1 @@
-from exception.exception import PassedPlaylistsAssignment, PassSongsInPlaylistAssignment, PlaylistAlreadyExist
+from exception.user_exception import PassedPlaylistsAssignment, PassSongsInPlaylistAssignment, PlaylistAlreadyExist

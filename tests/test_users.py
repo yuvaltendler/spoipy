@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from exception.exception import PlaylistAlreadyExist, PassSongsInPlaylistAssignment, PassedPlaylistsAssignment
+from exception.user_exception import PlaylistAlreadyExist, PassSongsInPlaylistAssignment, PassedPlaylistsAssignment
 from users.users import FreeUser
 
 

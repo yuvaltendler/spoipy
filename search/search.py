@@ -1,3 +1,6 @@
+import logging
+
+from exception.search_exception import ArtistIdDoesNotExist, AlbumIdDoesNotExist, SongIdDoesNotExist
 from music import Artist, ArtistManager, Album, Song
 from properties import Properties
 
@@ -9,6 +12,9 @@ class Search:
 
     @staticmethod
     def get_albums(artist_id: str) -> [Album]:
+        if artist_id not in ArtistManager().artists:
+            logging.info(f'Artist id {artist_id} does not exist')
+            raise ArtistIdDoesNotExist()
         return list(ArtistManager().artists[artist_id].albums.values())
 
     @staticmethod
@@ -16,6 +22,8 @@ class Search:
         for artist in ArtistManager().artists.values():
             if album_id in artist.albums:
                 return list(artist.albums[album_id].songs.values())
+        logging.info(f'Album id {album_id} does not exist')
+        raise AlbumIdDoesNotExist()
 
     @staticmethod
     def get_song(song_id: str) -> Song:
@@ -23,6 +31,8 @@ class Search:
             for album in artist.albums.values():
                 if song_id in album.songs:
                     return album.songs[song_id]
+        logging.info(f'Song id {song_id} does not exist')
+        raise SongIdDoesNotExist()
 
     @staticmethod
     def get_beast_songs(artist_id: str, num_of_results: int = 10) -> [Song]:

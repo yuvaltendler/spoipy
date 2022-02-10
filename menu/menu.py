@@ -3,8 +3,9 @@ import logging
 from consolemenu import *
 from consolemenu.items import *
 
-from exception.exception import DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment, \
-    PassedPlaylistsAssignment
+from exception.search_exception import AlbumIdDoesNotExist, ArtistIdDoesNotExist, SongIdDoesNotExist
+from exception.user_exception import DisconnectedUser, PlaylistAlreadyExist, PassSongsInPlaylistAssignment, \
+    PassedPlaylistsAssignment, UserDoesNotExist
 from search.search import Search
 from singleton import Singleton
 from users import UserManager, PremiumUser
@@ -61,33 +62,45 @@ class Menu(metaclass=Singleton):
 
     def _get_albums(self):
         artist_id = input('Enter artist id: ')
-        if self.is_free_user:
-            print([album.name for album in Search.limit(Search.get_albums(artist_id))])
-            return
-        print([album.name for album in Search.get_albums(artist_id)])
+        try:
+            if self.is_free_user:
+                print([album.name for album in Search.limit(Search.get_albums(artist_id))])
+                return
+            print([album.name for album in Search.get_albums(artist_id)])
+        except ArtistIdDoesNotExist as e:
+            print(f'Exception: {type(e)} {str(e)}')
 
     def _get_songs_in_album(self):
         album_id = input('Enter album id: ')
-        if self.is_free_user:
-            print([str(song) for song in Search.limit(Search.get_songs_in_album(album_id))])
-            return
-        print([str(song) for song in Search.get_songs_in_album(album_id)])
+        try:
+            if self.is_free_user:
+                print([str(song) for song in Search.limit(Search.get_songs_in_album(album_id))])
+                return
+            print([str(song) for song in Search.get_songs_in_album(album_id)])
+        except AlbumIdDoesNotExist as e:
+            print(f'Exception: {type(e)} {str(e)}')
 
     def _get_beast_songs(self):
         artist_id = input('Enter artist id: ')
-        if self.is_free_user:
-            print(Search.limit(Search.get_beast_songs(artist_id)))
-            return
-        print(Search.get_beast_songs(artist_id))
+        try:
+            if self.is_free_user:
+                print(Search.limit(Search.get_beast_songs(artist_id)))
+                return
+            print(Search.get_beast_songs(artist_id))
+        except ArtistIdDoesNotExist as e:
+            print(f'Exception: {type(e)} {str(e)}')
 
     def _login(self):
         username = input('Username: ')
-        #password = getpass()
-        if username not in UserManager().users:
-            logging.warning('Try to connect with unknown username')
-            raise UserDoesNotExist()
-        self.username = username
-        self.is_free_user = not isinstance(UserManager().users[username], PremiumUser)
+        # password = getpass()
+        try:
+            if username not in UserManager().users:
+                logging.warning('Try to connect with unknown username')
+                raise UserDoesNotExist()
+            self.username = username
+            self.is_free_user = not isinstance(UserManager().users[username], PremiumUser)
+        except UserDoesNotExist as e:
+            print(f'Exception: {type(e)} {str(e)}')
 
     def _get_user(self):
         if self.username == '':
@@ -105,7 +118,6 @@ class Menu(metaclass=Singleton):
         except (DisconnectedUser, UserDoesNotExist) as e:
             print(f'Exception: {type(e)} {str(e)}')
 
-
     def _create_playlist(self):
         try:
             user = self._get_user()
@@ -114,12 +126,12 @@ class Menu(metaclass=Singleton):
         except (DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment) as e:
             print(f'Exception: {type(e)} {str(e)}')
 
-
     def _add_song_to_playlist(self):
         try:
             user = self._get_user()
             playlist_name = input('Enter playlist name: ')
             song_id = input('Enter song id: ')
             user.add_songs_to_playlist(playlist_name, [Search.get_song(song_id)])
-        except (DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment, PassedPlaylistsAssignment) as e:
+        except (DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment,
+                PassedPlaylistsAssignment, SongIdDoesNotExist) as e:
             print(f'Exception: {type(e)} {str(e)}')

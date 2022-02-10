@@ -1,6 +1,6 @@
 import logging
 
-from exception.exception import PassedPlaylistsAssignment, PassSongsInPlaylistAssignment, PlaylistAlreadyExist
+from exception.user_exception import PassedPlaylistsAssignment, PassSongsInPlaylistAssignment, PlaylistAlreadyExist
 from music import Artist, Song
 from properties import Properties
 from singleton import Singleton
