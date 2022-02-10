@@ -20,17 +20,15 @@ class Menu(metaclass=Singleton):
         menu = ConsoleMenu('Spotipy', 'Welcome to spotipy')
 
         search_menu = self._build_search_menu()
+        playlist_menu = self._build_playlist_menu()
         search = SubmenuItem('Search', search_menu, menu)
         login = FunctionItem('Login', Menu._login, [self])
-        get_playlists = FunctionItem('Get my playlists', Menu._get_playlists, [self])
-        create_playlist = FunctionItem('Create playlist', Menu._create_playlist, [self])
-        add_song_to_playlist = FunctionItem('Add song to playlist', Menu._add_song_to_playlist, [self])
+        playlist = SubmenuItem('Edit playlist', playlist_menu, menu)
 
         menu.append_item(login)
         menu.append_item(search)
-        menu.append_item(get_playlists)
-        menu.append_item(create_playlist)
-        menu.append_item(add_song_to_playlist)
+        menu.append_item(playlist)
+
         return menu
 
     def _build_search_menu(self):
@@ -44,6 +42,16 @@ class Menu(metaclass=Singleton):
         search_menu.append_item(get_songs_in_album)
         search_menu.append_item(get_beast_songs)
         return search_menu
+
+    def _build_playlist_menu(self):
+        playlist_menu = ConsoleMenu('Spotipy', 'Playlist menu')
+        get_playlists = FunctionItem('Get my playlists', Menu._get_playlists, [self])
+        create_playlist = FunctionItem('Create playlist', Menu._create_playlist, [self])
+        add_song_to_playlist = FunctionItem('Add song to playlist', Menu._add_song_to_playlist, [self])
+        playlist_menu.append_item(get_playlists)
+        playlist_menu.append_item(create_playlist)
+        playlist_menu.append_item(add_song_to_playlist)
+        return playlist_menu
 
     def _get_artists(self):
         if self.is_free_user:
