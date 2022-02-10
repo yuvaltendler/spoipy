@@ -4,6 +4,7 @@ import os
 from load import LoadMusic
 import menu
 from properties import Properties
+from users import UserManager, PremiumUser
 
 
 def main():

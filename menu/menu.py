@@ -3,15 +3,19 @@ from consolemenu.items import *
 
 from search.search import Search
 from singleton import Singleton
+from users import UserManager, PremiumUser
 
 
 class Menu(metaclass=Singleton):
     def __init__(self):
-        self.menu = ConsoleMenu('Spotipy', 'Welcome to spotipy')
         self.is_free_user = True
+        self.username = ''
+        self.menu = ConsoleMenu('Spotipy', 'Welcome to spotipy')
 
         search_menu = self._get_search_menu()
         search = SubmenuItem('Search', search_menu, self.menu)
+        login = FunctionItem('Login', Menu._login, [self])
+
 
         menu_item = MenuItem("Menu Item")
         function_item = FunctionItem("Call a Python function", input, ["Enter an input"])
@@ -19,6 +23,7 @@ class Menu(metaclass=Singleton):
         selection_menu = SelectionMenu(["item1", "item2", "item3"])
         submenu_item = SubmenuItem("Submenu item", selection_menu, self.menu)
 
+        self.menu.append_item(login)
         self.menu.append_item(search)
         self.menu.append_item(menu_item)
         self.menu.append_item(function_item)
@@ -63,3 +68,10 @@ class Menu(metaclass=Singleton):
             print([str(song) for song in Search.limit(Search.get_beast_songs(artist_id))])
             return
         print([str(song) for song in Search.get_beast_songs(artist_id)])
+
+    def _login(self):
+        username = input('Username: ')
+        #password = getpass()
+        if username in UserManager().users:
+            self.username = username
+            self.is_free_user = not isinstance(UserManager().users[username], PremiumUser)
