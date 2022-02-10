@@ -3,7 +3,7 @@ import logging
 from consolemenu import *
 from consolemenu.items import *
 
-from exception.exception import DisconnectedUser, UserDoesNotExist
+from exception.exception import DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment
 from search.search import Search
 from singleton import Singleton
 from users import UserManager, PremiumUser
@@ -22,10 +22,12 @@ class Menu(metaclass=Singleton):
         search = SubmenuItem('Search', search_menu, menu)
         login = FunctionItem('Login', Menu._login, [self])
         get_playlists = FunctionItem('Get my playlists', Menu._get_playlists, [self])
+        create_playlist = FunctionItem('Create playlist', Menu._create_playlist, [self])
 
         menu.append_item(login)
         menu.append_item(search)
         menu.append_item(get_playlists)
+        menu.append_item(create_playlist)
         return menu
 
     def _build_search_menu(self):
@@ -92,3 +94,11 @@ class Menu(metaclass=Singleton):
         except (DisconnectedUser, UserDoesNotExist) as e:
             print(f'Exception: {type(e)} {str(e)}')
 
+
+    def _create_playlist(self):
+        try:
+            user = self._get_user()
+            playlist_name = input('Enter playlist name: ')
+            user.add_playlist(playlist_name, [])
+        except (DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment) as e:
+            print(f'Exception: {type(e)} {str(e)}')
