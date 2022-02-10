@@ -12,17 +12,23 @@ class Song:
 
 
 class Album:
-    def __init__(self, name: str, songs: {str: Song} = {}):
+    def __init__(self, name: str, songs=None):
+        if songs is None:
+            songs = {}
         self.name = name
-        self.songs = {}  # songs
+        self.songs = songs
 
 
 class Artist:
-    def __init__(self, name: str, albums: {str, Album} = {}):
+    def __init__(self, name: str, albums=None):
+        if albums is None:
+            albums = {}
         self.name = name
-        self.albums = {}  # albums
+        self.albums = albums
 
 
 class ArtistManager(metaclass=Singleton):
-    def __init__(self, artists: {str: Artist} = {}):
+    def __init__(self, artists=None):
+        if artists is None:
+            artists = {}
         self.artists = artists
