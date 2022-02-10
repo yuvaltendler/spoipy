@@ -10,6 +10,9 @@ class Song:
         return self.name == other.name and \
                self.popularity == other.popularity
 
+    def __str__(self):
+        return f'name = {self.name}, popularity = {self.popularity}'
+
 
 class Album:
     def __init__(self, name: str, songs=None):
