@@ -12,6 +12,7 @@ class Menu(metaclass=Singleton):
         get_artists = FunctionItem('Get all artists', Menu._get_artists, [self])
         get_albums = FunctionItem('Get artist\'s albums', Menu._get_albums, [self])
         get_songs_in_album = FunctionItem('Get songs in album', Menu._get_songs_in_album, [self])
+        get_beast_songs = FunctionItem('Get beast songs', Menu._get_beast_songs, [self])
 
         menu_item = MenuItem("Menu Item")
         function_item = FunctionItem("Call a Python function", input, ["Enter an input"])
@@ -21,6 +22,7 @@ class Menu(metaclass=Singleton):
         self.menu.append_item(get_artists)
         self.menu.append_item(get_albums)
         self.menu.append_item(get_songs_in_album)
+        self.menu.append_item(get_beast_songs)
 
         self.menu.append_item(menu_item)
         self.menu.append_item(function_item)
@@ -46,3 +48,10 @@ class Menu(metaclass=Singleton):
             print([str(song) for song in Search.limit(Search.get_songs_in_album(album_id))])
             return
         print([str(song) for song in Search.get_songs_in_album(album_id)])
+
+    def _get_beast_songs(self):
+        artist_id = input('Enter artist id: ')
+        if self.is_free_user:
+            print([str(song) for song in Search.limit(Search.get_beast_songs(artist_id))])
+            return
+        print([str(song) for song in Search.get_beast_songs(artist_id)])
