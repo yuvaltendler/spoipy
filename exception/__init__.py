@@ -1,1 +1,2 @@
 from exception.user_exception import PassedPlaylistsAssignment, PassSongsInPlaylistAssignment, PlaylistAlreadyExist
+from exception.search_exception import AlbumIdDoesNotExist, SongIdDoesNotExist, ArtistIdDoesNotExist
