@@ -41,10 +41,9 @@ class Search:
         songs = []
         for album in Search.get_albums(artist_id):
             songs = songs + list(album.songs.values())
-        res = sorted(songs, key= lambda song: song.popularity, reverse=True)
+        res = sorted(songs, key=lambda song: song.popularity, reverse=True)
         return res[:num_of_results]
 
     @staticmethod
     def limit(array):
         return array[:Properties().properties.get('FREE_USER_LIMIT_SEARCH_RESULT')]
-

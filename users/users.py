@@ -17,11 +17,13 @@ class FreeUser():
         self.playlists = {}
 
     def add_playlist(self, name: str, playlist: [Song]):
-        if len(self.playlists) >=  Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'):
-            logging.warning('User try to add more then %d playlist', Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'))
+        if len(self.playlists) >= Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'):
+            logging.warning('User try to add more then %d playlist',
+                            Properties().properties.get('FREE_USER_LIMIT_PLAYLISTS'))
             raise PassedPlaylistsAssignment()
         elif len(playlist) > Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'):
-            logging.warning('User try to add playlist that bigger then %d', Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
+            logging.warning('User try to add playlist that bigger then %d',
+                            Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
             raise PassSongsInPlaylistAssignment()
         elif name in self.playlists:
             logging.warning('User try to add 2 playlists with the same name')
@@ -35,9 +37,11 @@ class FreeUser():
             return
         playlist = self.playlists[playlist_name]
         if len(playlist) + len(songs) > Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'):
-            logging.warning('User try to add playlist that bigger then %d', Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
+            logging.warning('User try to add playlist that bigger then %d',
+                            Properties().properties.get('FREE_USER_LIMIT_SONGS_IN_PLAYLIST'))
             raise PassSongsInPlaylistAssignment()
         self.playlists[playlist_name] = playlist + songs
+
 
 class PremiumUser(FreeUser):
     def __init__(self):
@@ -63,7 +67,8 @@ class ArtistUser(PremiumUser):
         self.artist = artist
 
 
-
 class UserManager(metaclass=Singleton):
-    def __init__(self, users: {str: FreeUser} = {}):
+    def __init__(self, users: {str: FreeUser} = None):
+        if users is None:
+            users = {}
         self.users = users
