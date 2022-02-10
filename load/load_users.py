@@ -1,9 +1,12 @@
 import json
 import logging
 
+from exception.user_exception import DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, \
+    PassSongsInPlaylistAssignment, PassedPlaylistsAssignment
 from music import ArtistManager
 from search.search import Search
 from users import UserManager, FreeUser, ArtistUser, PremiumUser
+from exception.search_exception import SongIdDoesNotExist
 
 
 class LoadUsers():
@@ -31,6 +34,10 @@ class LoadUsers():
 
     @staticmethod
     def _parse_playlists(playlist_dict, user: FreeUser):
-        for playlist_name in playlist_dict.keys():
-            songs = [Search.get_song(song_id) for song_id in playlist_dict[playlist_name]]
-            user.add_playlist(playlist_name, songs)
+        try:
+            for playlist_name in playlist_dict.keys():
+                songs = [Search.get_song(song_id) for song_id in playlist_dict[playlist_name]]
+                user.add_playlist(playlist_name, songs)
+        except (DisconnectedUser, UserDoesNotExist, PlaylistAlreadyExist, PassSongsInPlaylistAssignment,
+                PassedPlaylistsAssignment, SongIdDoesNotExist) as e:
+            print(f'Exception: {type(e)} {str(e)}')
