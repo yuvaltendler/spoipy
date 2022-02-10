@@ -11,7 +11,7 @@ from singleton import Singleton
 #     def sign_up():
 #         pass
 
-class FreeUser():
+class FreeUser:
 
     def __init__(self):
         self.playlists = {}
